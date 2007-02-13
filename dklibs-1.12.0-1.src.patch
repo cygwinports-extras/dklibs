@@ -1,0 +1,28 @@
+diff -urN -x CYGWIN-PATCHES -x 'aclocal.m4*' -x ltmain.sh -x 'config.*' -x depcomp -x install-sh -x missing -x mkinstalldirs -x autom4te.cache -x '*compile' -x Makefile.in.in -x 'intltool*.in' -x 'xml-i18n-*.in' -x '*.pyc' -x '*.mo' -x '*.gmo' -x ABOUT-NLS -x Makevars.template -x COPYING -x INSTALL -x mdate-sh -x '*.orig' -x '*.rej' -x '*~' -x '*.temp' -x texinfo.tex -x ylwrap -x configure -x gnome-doc-utils.make -x gnome-doc-utils.m4 -x intltool.m4 -x omf.make -x xmldocs.make -x appdefaults origsrc/dklibs-1.12.0/configure.in src/dklibs-1.12.0/configure.in
+--- origsrc/dklibs-1.12.0/configure.in	2007-01-05 06:41:43.000000000 -0600
++++ src/dklibs-1.12.0/configure.in	2007-02-13 08:46:43.228726600 -0600
+@@ -45,11 +45,16 @@
+ AC_HEADER_CHECK(xti.h, AC_DEFINE(HAVE_XTI_H))
+ AC_HEADER_CHECK(tiuser.h, AC_DEFINE(HAVE_TIUSER_H))
+ AC_HEADER_CHECK(sys/socket.h, AC_DEFINE(HAVE_SYS_SOCKET_H))
++case "$host_os" in
++	mingw*)
+ AC_HEADER_CHECK(windows.h, AC_DEFINE(HAVE_WINDOWS_H))
+ AC_HEADER_CHECK(winbase.h, AC_DEFINE(HAVE_WINBASE_H))
+ AC_HEADER_CHECK(winreg.h, AC_DEFINE(HAVE_WINREG_H))
+ AC_HEADER_CHECK(winsock2.h, AC_DEFINE(HAVE_WINSOCK2_H))
+ AC_HEADER_CHECK(wincon.h, AC_DEFINE(HAVE_WINCON_H))
++AC_HEADER_CHECK(conio.h, AC_DEFINE(HAVE_CONIO_H))
++	;;
++esac
+ AC_HEADER_CHECK(netinet/in.h, AC_DEFINE(HAVE_NETINET_IN_H))
+ AC_HEADER_CHECK(arpa/inet.h, AC_DEFINE(HAVE_ARPA_INET_H))
+ AC_HEADER_CHECK(netdb.h, AC_DEFINE(HAVE_NETDB_H))
+@@ -60,7 +65,6 @@
+ AC_HEADER_CHECK(math.h, AC_DEFINE(HAVE_MATH_H))
+ AC_HEADER_CHECK(signal.h, AC_DEFINE(HAVE_SIGNAL_H))
+ AC_HEADER_CHECK(syslog.h, AC_DEFINE(HAVE_SYSLOG_H))
+-AC_HEADER_CHECK(conio.h, AC_DEFINE(HAVE_CONIO_H))
+ AC_HEADER_CHECK(ndbm.h, AC_DEFINE(HAVE_NDBM_H))
+ AC_HEADER_CHECK(wchar.h, AC_DEFINE(HAVE_WCHAR_H))
+ AC_HEADER_CHECK(stdarg.h, AC_DEFINE(HAVE_STDARG_H))

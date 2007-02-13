@@ -1,0 +1,40 @@
+DESCRIPTION=
+HOMEPAGE="http://dklibs.sourceforge.net/"
+SRC_URI=mirror://sourceforge/${PN}/${P}.tar.gz
+
+DIFF_EXCLUDES="appdefaults"
+MAKEOPTS+=" -j1"
+
+src_compile() {
+	cd ${S}
+	NO_AUTOHEADER=1 cygautoreconf
+	lndirs
+	cd ${B}
+	CYGCONF_SOURCE=. cygconf
+	cygmake
+}
+
+src_install() {
+	local f
+
+	cd ${B}
+	dobin *.exe tracecc-gui *.jar
+	dolib *.a
+	doman man/man3/*
+
+	insinto /etc
+	doins appdefaults
+
+	insinto /usr/include
+	doins *.h
+	rm ${D}/usr/include/config.h
+	./dkconfig > ${D}/usr/include/dkconfig.h
+
+	mv share/doc/${PN} share/doc/${P}
+	find share/ -type d -exec mkdir -p ${D}/usr/'{}' +
+	for f in $(find share/ ! -type d)
+	do
+		insinto /usr/${f%/*}
+		doins ${f}
+	done
+}
